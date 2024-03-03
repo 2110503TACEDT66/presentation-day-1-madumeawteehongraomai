@@ -1,26 +1,10 @@
 const express = require('express');
 const router = express.Router();
 
-const app=express();
 
-router.get('/', (req,res)=>{
-    res.status(200).json({success:true, msg:'Show all companies'});
-});
+const {getCompanies, getCompany, createCompany, updateCompany, deleteCompany} = require('../controllers/companies');
 
-router.get('/:id', (req,res)=>{
-    res.status(200).json({success:true, msg:`Show company ${req.params.id}`});
-});
-
-router.post('/', (req,res)=>{
-    res.status(200).json({success:true, msg:'Create new companies'});
-});
-
-router.put('/:id', (req,res)=>{
-    res.status(200).json({success:true, msg:`Update company ${req.params.id}`});
-});
-
-router.delete('/:id', (req,res)=>{
-    res.status(200).json({success:true, msg:`Delete company ${req.params.id}`});
-});
+router.route('/').get(getCompanies).post(createCompany);
+router.route('/:id').get(getCompany).put(updateCompany).delete(deleteCompany);
 
 module.exports=router;
