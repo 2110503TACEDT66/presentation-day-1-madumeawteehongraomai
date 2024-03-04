@@ -7,14 +7,16 @@ title "Manage Interview (GETONE)"
 participant "Client" as client
 participant "<<javaScript>>\n:server" as server
 participant "<<router>>\n:interviews" as routerInterviews
+participant "<<middleware>>\n:auths" as auth
 participant "<<controllers>>\n:interviews" as controllersInterviews
 participant "<<model>>\n:Interview" as modelInterview
 database "<<MongoDB>>\n:Interviews" as InterviewsDatabase
 
 client->server ++:req.get('/interviews/:id')
 server->routerInterviews ++:app.use('/interviews',interviews)
+routerInterviews-> auth ++:protect
 routerInterviews -> controllersInterviews ++:getInterview()
-controllersInterviews->modelInterview ++:get(req.body)
+controllersInterviews->modelInterview ++:findById(req.params.id)
 modelInterview ->InterviewsDatabase ++: InterviewSchema
 InterviewsDatabase --> modelInterview --: Interview
 controllersInterviews <-- modelInterview --:Interview

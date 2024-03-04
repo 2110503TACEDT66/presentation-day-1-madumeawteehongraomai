@@ -14,7 +14,7 @@ database "<<MongoDB>>\n:Jobposition" as JobpositionsDatabase
 client->server ++:req.get('/positions/:id')
 server->routerJobpositions ++:app.use('/positions',jobposition)
 routerJobpositions -> controllersJobpositions ++:getJobposition()
-controllersJobpositions->modelJobposition ++:get(req.body)
+controllersJobpositions->modelJobposition ++:findById(req.params.id)
 modelJobposition ->JobpositionsDatabase ++: JobpositionSchema
 JobpositionsDatabase --> modelJobposition --: jobpositions
 controllersJobpositions <-- modelJobposition --:jobpositions

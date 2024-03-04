@@ -128,7 +128,9 @@ class "<<Resource>>\nJobpositions" {
 "<<Resource>>\nJobpositions" -- "<<Resource>>\nJobposition" : <<Path>>\nInterview_ID
 "<<Resource>>\nJobposition" -- "<<Model>>\nJobposition" : <<Use>>
 "<<Resource>>\nJobpositions" -- "<<Model>>\nJobposition" : <<Use>>
-  
+
+"<<Resource>>\nCompanies" -- "<<Model>>\nJobposition" : <<Use>>
+"<<Resource>>\nCompany" -- "<<Model>>\nJobposition" : <<Use>>
 }
 
 @enduml

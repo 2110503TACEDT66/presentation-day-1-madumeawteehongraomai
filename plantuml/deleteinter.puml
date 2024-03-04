@@ -7,14 +7,17 @@ title "Manage Interview (DELETE)"
 participant "Client" as client
 participant "<<javaScript>>\n:server" as server
 participant "<<router>>\n:interviews" as routerInterviews
+participant "<<middleware>>\n:auths" as auth
 participant "<<controllers>>\n:interviews" as controllersInterviews
 participant "<<model>>\n:Interview" as modelInterview
 database "<<MongoDB>>\n:Interviews" as InterviewsDatabase
 
 client->server ++:req.delete('/interviews/:id')
 server->routerInterviews ++:app.use('/interviews',interviews)
+routerInterviews -> auth ++:protect,authorize('admin','user')
 routerInterviews -> controllersInterviews ++:deleteInterview()
-controllersInterviews->modelInterview ++:delete(req.body)
+controllersInterviews->modelInterview ++:findById(req.params.id)
+controllersInterviews->modelInterview :delete(req.body)
 modelInterview ->InterviewsDatabase ++: InterviewSchema
 InterviewsDatabase --> modelInterview --: Interview
 controllersInterviews <-- modelInterview --:Interview

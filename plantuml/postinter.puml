@@ -7,12 +7,14 @@ title "Manage Interview (POST)"
 participant "Client" as client
 participant "<<javaScript>>\n:server" as server
 participant "<<router>>\n:interviews" as routerHospitals
+participant "<<middleware>>\n:auths" as auth
 participant "<<controllers>>\n:interviews" as controllersHospitals
 participant "<<model>>\n:Interview" as modelHospital
 database "<<MongoDB>>\n:Interviews" as HospitalsDatabase
 
 client->server ++:req.post('/interviews')
 server->routerHospitals ++:app.use('/interviews',interviews)
+routerHospitals-> auth ++:protect,authorize('admin','user')
 routerHospitals -> controllersHospitals ++:addInterview()
 controllersHospitals->modelHospital ++:create(req.body)
 modelHospital ->HospitalsDatabase ++: InterviewSchema

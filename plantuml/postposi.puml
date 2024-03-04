@@ -7,12 +7,14 @@ title "Manage Jobposition (POST)"
 participant "Client" as client
 participant "<<javaScript>>\n:server" as server
 participant "<<router>>\njobposition:" as routerHospitals
+participant "<<middleware>>\n:auths" as auth
 participant "<<controllers>>\n:jobpositions" as controllersHospitals
 participant "<<model>>\n:Jobposition" as modelHospital
 database "<<MongoDB>>\n:Jobposition" as HospitalsDatabase
 
 client->server ++:req.post('/positions')
 server->routerHospitals ++:app.use('/positions',jobposition)
+routerHospitals-> auth ++:protect,authorize('admin')
 routerHospitals -> controllersHospitals ++:createJobpositions()
 controllersHospitals->modelHospital ++:create(req.body)
 modelHospital ->HospitalsDatabase ++: JobpositionSchema

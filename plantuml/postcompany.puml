@@ -7,12 +7,14 @@ title "Manage Company (POST)"
 participant "Client" as client
 participant "<<javaScript>>\n:server" as server
 participant "<<router>>\n:companies" as routerCompany
+participant "<<middleware>>\n:auths" as auth
 participant "<<controllers>>\n:companies" as controllersCompany
 participant "<<model>>\n:Companies" as modelCompany
 database "<<MongoDB>>\n:Companies" as CompanyDatabase
 
 client->server ++:req.post('/companies')
 server->routerCompany ++:app.use('/companies',companies)
+routerCompany->auth ++:protect,authorize('admin')
 routerCompany -> controllersCompany ++:createCompany()
 controllersCompany->modelCompany ++:create(req.body)
 modelCompany ->CompanyDatabase ++: CompanySchema
