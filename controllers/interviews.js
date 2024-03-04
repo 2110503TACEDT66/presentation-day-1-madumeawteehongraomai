@@ -1,5 +1,5 @@
 const Interview = require('../models/Interview');
-const Company = require('../models/Companies')
+const Company = require('../models/Companies');
 //@desc     Get all interviews
 //@route    GET /api/v1/interviews
 //@access   Public
@@ -9,12 +9,18 @@ exports.getInterviews=async(req,res,next)=>{
     if(req.user.role !== 'admin'){
         query=Interview.find({user:req.user.id}).populate({
             path:'company',
-            select:'name province tel'
+            select:'name tel'
+        }).populate({
+            path:'job_position',
+            select:'position'
         });
     }else{ //If you are an admin, you can see all 
         query = Interview.find().populate({
             path:'company',
-            select:'name province tel'
+            select:'name tel'
+        }).populate({
+            path:'job_position',
+            select:'position'
         });
     }
     try{
@@ -26,7 +32,7 @@ exports.getInterviews=async(req,res,next)=>{
         });
     } catch(err){
         console.log(err.stack);
-        return req.status(500).json({success:false,message:"Cannot find Interview"});
+        return res.status(500).json({success:false,message:"Cannot find Interview"});
     }
 };
 
@@ -38,7 +44,10 @@ exports.getInterview=async(req,res,next)=>{
     try{
         const interview= await Interview.findById(req.params.id).populate({
             path: 'company',
-            select: 'name description tel'
+            select: 'name tel'
+        }).populate({
+            path:'job_position',
+            select:'position'
         });
 
         if(!interview){
