@@ -1,0 +1,134 @@
+@startuml
+header Sameple OnlineJobFair Class Diagram
+
+left to right direction
+package "OnlineJobFair"{
+    class "OnlineJobFairApp" <<Application>> {
+}
+
+class "<<Resource>>\nAuth" {
+}
+
+class "<<Resource>>\nLoginService" {
+  <<POST>> + login : User
+}
+
+class "<<Resource>>\nRegisterService" {
+  <<POST>> + register : User
+}
+
+class "<<Resource>>\nGetmeService" {
+  <<GET>> + getMe : User
+}
+
+class "<<Resource>>\nLogoutService" {
+  <<POST>> + logout : User
+}
+
+class "<<Resource>>\nTokenResponseService" {
+  <<POST>> + sendTokenResponse : User
+}
+
+class "<<Model>>\nUser" {
+  - name: String
+  - tel: string
+  - email: String
+  - password: String
+  - role: String 
+  - resetPasswordToken: String
+  - resetPasswordExpire: Date
+  - createdAt: Date
+}
+
+class "<<Model>>\nInterview" {
+  - intvDate: Date
+  - user: ObjectId
+  - company: ObjectId
+  - job_position: ObjectId
+  - createAt: Date
+}
+
+class "<<Resource>>\nInterview" {
+    <<GET>> + getInterview() : Interview
+    <<PUT>> + updateInterview() : Interview
+    <<DELETE>> + deleteInterview() : void
+}
+
+class "<<Resource>>\nInterviews" {
+  --
+  <<GET>> + getInterviews : Interviews
+  <<POST>> + addInterview() : Interview
+}
+
+class "<<Model>>\nCompany" {
+  - name: String
+  - address: String
+  - website: String
+  - description: String
+  - tel: String
+}
+
+class "<<Resource>>\nCompany" {
+    <<GET>> + getCompany() : Company
+    <<PUT>> + updateCompany() : Company
+    <<DELETE>> + deleteCompany() : void
+}
+
+class "<<Resource>>\nCompanies" {
+  --
+  <<GET>> + getCompanies : Company
+  <<POST>> + createCompany() : Company
+}
+class "<<Model>>\nJobposition" {
+  - position: String
+  - requirement: String
+  - company: ObjectId
+
+}
+
+class "<<Resource>>\nJobposition" {
+    <<GET>> + getCompany() : Company
+    <<PUT>> + updateCompany() : Company
+    <<DELETE>> + deleteCompany() : void
+}
+
+class "<<Resource>>\nJobpositions" {
+  --
+  <<GET>> + getCompanies : Companies
+  <<POST>> + createCompany() : Company
+}
+
+"OnlineJobFairApp" -- "<<Resource>>\nAuth" : <<Path>>\nauth
+"OnlineJobFairApp" -- "<<Resource>>\nCompanies" : <<Path>>\ncompany
+"OnlineJobFairApp" -- "<<Resource>>\nInterviews" : <<Path>>\ninterview
+"OnlineJobFairApp" -- "<<Resource>>\nJobpositions" : <<Path>>\nposition
+
+
+"<<Resource>>\nAuth" -- "<<Resource>>\nLoginService" : <<Path>>\nlogin
+"<<Resource>>\nAuth" -- "<<Resource>>\nRegisterService"  : <<Path>>\nregister
+"<<Resource>>\nAuth" -- "<<Resource>>\nGetmeService"  : <<Path>>\nGetme
+"<<Resource>>\nAuth" -- "<<Resource>>\nLogoutService"  : <<Path>>\nlogout
+"<<Resource>>\nAuth" -- "<<Resource>>\nTokenResponseService"  : <<Path>>\nsendTokenResponse
+
+"<<Resource>>\nLoginService" -- "<<Model>>\nUser" : <<Use>>
+"<<Resource>>\nRegisterService" -- "<<Model>>\nUser" : <<Use>>
+"<<Resource>>\nGetmeService" -- "<<Model>>\nUser" : <<Use>>
+"<<Resource>>\nLogoutService" -- "<<Model>>\nUser" : <<Use>>
+"<<Resource>>\nTokenResponseService" -- "<<Model>>\nUser" : <<Use>>
+
+"<<Resource>>\nInterviews" -- "<<Resource>>\nInterview" : <<Path>>\nInterview_ID
+"<<Resource>>\nInterview" -- "<<Model>>\nInterview" : <<Use>>
+"<<Resource>>\nInterviews" -- "<<Model>>\nInterview" : <<Use>>
+
+
+"<<Resource>>\nCompanies" -- "<<Resource>>\nCompany" : <<Path>>\nCompanies_ID
+"<<Resource>>\nCompany" -- "<<Model>>\nCompany" : <<Use>>
+"<<Resource>>\nCompanies" -- "<<Model>>\nCompany" : <<Use>>
+
+"<<Resource>>\nJobpositions" -- "<<Resource>>\nJobposition" : <<Path>>\nInterview_ID
+"<<Resource>>\nJobposition" -- "<<Model>>\nJobposition" : <<Use>>
+"<<Resource>>\nJobpositions" -- "<<Model>>\nJobposition" : <<Use>>
+  
+}
+
+@enduml

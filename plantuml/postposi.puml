@@ -13,7 +13,7 @@ database "<<MongoDB>>\n:Jobposition" as HospitalsDatabase
 
 client->server ++:req.post('/positions')
 server->routerHospitals ++:app.use('/positions',jobposition)
-routerHospitals -> controllersHospitals ++:ucreateJobpositions()
+routerHospitals -> controllersHospitals ++:createJobpositions()
 controllersHospitals->modelHospital ++:create(req.body)
 modelHospital ->HospitalsDatabase ++: JobpositionSchema
 HospitalsDatabase --> modelHospital --: jobpositions

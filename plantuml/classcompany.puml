@@ -1,0 +1,33 @@
+@startuml
+header Sameple OnlineJobFair Class Diagram
+
+left to right direction
+package "OnlineJobFair"{
+    class "<<Application>>\nOnlineJobFair" as OnlineJobFair{}
+
+    class "<<Resource>>\nCompanies" as ResourceCompanies{
+        <<GET>> +getCompanies():company
+        <<POST>> +createCompany():company
+    }
+
+    class "<<Resource>>\nCompany" as ResourceCompany {
+        <<GET>> +getCompany(): company
+        <<PUT>> +updateCompany(): company
+        <<DELETE>> +deleteCompany(): void
+    }
+
+    class "<<Representation>>\nCompany" as RepresentationCompany {
+        -name
+        -address
+        -website
+        -description
+        -tel
+    }
+
+}
+
+OnlineJobFair ..> ResourceCompanies:"/companies\n<<Path>>"
+ResourceCompanies ..> ResourceCompany: "/{CompanyId}\n<<Path>>"
+ResourceCompany ..> RepresentationCompany: "<<use>>"
+
+@enduml
