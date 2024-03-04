@@ -1,5 +1,7 @@
 const express = require('express');
 const dotenv = require('dotenv');
+const cookieParser=require('cookie-parser');
+
 const connectDB = require('./config/db');
 
 //Route files
@@ -13,6 +15,10 @@ connectDB();
 
 const app=express();
 //Mount routers
+
+//Cookie parser
+app.use(cookieParser());
+
 app.use('/api/v1/companies',companies);
 app.use('/api/v1/auth', auth);
 
