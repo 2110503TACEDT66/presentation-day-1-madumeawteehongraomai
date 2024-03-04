@@ -16,7 +16,10 @@ connectDB();
 const app=express();
 //Mount routers
 
+
+app.use(express.json());
 //Cookie parser
+
 app.use(cookieParser());
 
 app.use('/api/v1/companies',companies);
