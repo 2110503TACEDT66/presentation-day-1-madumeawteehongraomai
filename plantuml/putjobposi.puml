@@ -1,0 +1,23 @@
+@startuml Manage Jobposition (PUT)
+
+header Sameple OnlineJobFair Sequence Diagram
+footer Page %page% of %lastpage%
+title "Manage Jobposition (PUT)"
+
+participant "Client" as client
+participant "<<javaScript>>\n:server" as server
+participant "<<router>>\njobposition:" as routerJobpositions
+participant "<<controllers>>\n:jobpositions" as controllersJobpositions
+participant "<<model>>\n:Jobposition" as modelJobposition
+database "<<MongoDB>>\n:Jobposition" as JobpositionsDatabase
+
+client->server ++:req.put('/positions/:id')
+server->routerJobpositions ++:app.use('/positions',jobposition)
+routerJobpositions -> controllersJobpositions ++:updateJobposition()
+controllersJobpositions->modelJobposition ++:update(req.body)
+modelJobposition ->JobpositionsDatabase ++: JobpositionSchema
+JobpositionsDatabase --> modelJobposition --: jobpositions
+controllersJobpositions <-- modelJobposition --:jobpositions
+controllersJobpositions->client --:response
+
+@enduml

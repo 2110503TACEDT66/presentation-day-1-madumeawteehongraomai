@@ -1,0 +1,43 @@
+@startuml
+header Sameple OnlineJobFair Class Diagram
+
+entity Company {
+    name : String
+    address : String
+    website : String
+    description : String
+    tel : String
+}
+
+entity Jobposition {
+    position : String
+    requirement : String
+    company : ObjectId
+}
+
+entity Interview {
+    intvDate : Date
+    user : Objectid
+    company : ObjectId
+    Jobposition : ObjectId
+    createAt : Date
+}
+
+entity User {
+    name : String
+    tel : String
+    email : String
+    password : String
+    role : String
+    resetPasswordToken: String
+    resetPasswordExpire: Date
+    createAt : Date
+}
+
+Company "1" -- "n" Jobposition : has
+Company "1" -- "n" Interview : organizes
+Jobposition "1" -- "n" Interview : for
+User "1" -- "n" Interview : participates
+Company "1" -- "n" User : employs
+
+@enduml
