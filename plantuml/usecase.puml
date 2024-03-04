@@ -1,0 +1,37 @@
+@startuml  OnlineJobFair Usecase Diagram
+header Sameple OnlineJobFair UseCase Diagram
+
+actor "User" as user
+rectangle "OnlineJobFair" as OnlineJobFair {
+   
+    usecase "View\nCompany" as viewcompany
+    usecase "View\nInterview" as viewinterview
+    usecase "View\nJobposition" as viewjobposition
+    
+    usecase "Manage\nCompany" as managecompany
+    usecase "Manage\nInterview" as manageinterview
+    usecase "Manage\nJobposition" as managejobposition
+    usecase "register" as register
+    usecase "LogIn" as login
+    usecase "LogOut" as logout
+}
+user -- register
+user -- viewcompany
+user -- viewinterview
+user -- viewjobposition
+user -- login
+user -- logout
+
+actor "Admin" as admin
+
+register -- admin
+managecompany -- admin
+manageinterview -- admin
+managejobposition -- admin
+login --admin
+logout -- admin
+viewcompany -- admin
+viewinterview -- admin
+viewjobposition -- admin
+
+@enduml

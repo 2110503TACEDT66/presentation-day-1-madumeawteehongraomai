@@ -1,0 +1,23 @@
+@startuml Manage Jobposition (GET)
+
+header Sameple OnlineJobFair Sequence Diagram
+footer Page %page% of %lastpage%
+title "Manage Jobposition (POST)"
+
+participant "Client" as client
+participant "<<javaScript>>\n:server" as server
+participant "<<router>>\njobposition:" as routerHospitals
+participant "<<controllers>>\n:jobpositions" as controllersHospitals
+participant "<<model>>\n:Jobposition" as modelHospital
+database "<<MongoDB>>\n:Jobposition" as HospitalsDatabase
+
+client->server ++:req.post('/positions')
+server->routerHospitals ++:app.use('/positions',jobposition)
+routerHospitals -> controllersHospitals ++:ucreateJobpositions()
+controllersHospitals->modelHospital ++:create(req.body)
+modelHospital ->HospitalsDatabase ++: JobpositionSchema
+HospitalsDatabase --> modelHospital --: jobpositions
+controllersHospitals <-- modelHospital --:jobpositions
+controllersHospitals->client --:response
+
+@enduml
