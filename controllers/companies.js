@@ -4,10 +4,9 @@ const Company = require('../models/Companies');
 //@access   Public
 exports.getCompanies=async(req,res,next)=>{
     try{
-        const company = await Company.find();
         let query;
 
-        res.status(200).json({success:true, count:company.length, data:company});
+        //res.status(200).json({success:true, count:company.length, data:company});
         //Copy req.query
         const reqQuery= {...req.query};
 
