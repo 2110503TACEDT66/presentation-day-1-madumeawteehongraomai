@@ -90,7 +90,7 @@ exports.addInterview=async(req,res,next)=>{
 
         const intvDate = req.body.intvDate;
 
-        if(intvDate > "2022-05-13" || intvDate < "2022-05-10") {
+        if(intvDate > "2022-05-13 23:59:59" || intvDate < "2022-05-10 00:00:00") {
             return res.status(400).json({success:false,message:'The Interview Date is not between May 10 - 13 2022'})
         }
 
