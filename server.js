@@ -46,11 +46,11 @@ app.use(hpp());
 app.use(cors());
 
 //Rate Limiting
-const limiter=rateLimit({
-    windowMs:10*60*1000,//10 mins
-    max: 100
-});
-app.use(limiter);
+// const limiter=rateLimit({
+//     windowMs:10*60*1000,//10 mins
+//     max: 1000
+// });
+// app.use(limiter);
 
 
 app.use('/api/v1/companies',companies);
@@ -59,7 +59,7 @@ app.use('/api/v1/auth', auth);
 app.use('/api/v1/positions', jobposition);
 
 const PORT=process.env.PORT || 5000;
-const server = app.listen(PORT, console.log('Server running in ', process.env.NODE_ENV, ' mode on port ', PORT));
+const server = app.listen(PORT, console.log('Server running in ', process.env.NODE_ENV,"on " + process.env.HOST +" :", PORT));
 
 //Handle unhandled promise rejections
 process.on('unhandledRejection',(err,promise)=>{
